@@ -30,8 +30,14 @@ block content
           td #{record.password}
           td #{record.gender}
           td #{record.admin}
+  div.alert.alert-info
+      strong Status:
+      |  #{statusMessage}
   h2 Edit Record for: #{doc[0].name}
   form(method='post', action='/edit/')
+    .form-group
+      label.sr-only(for='inputName') DO NOT CHANGE ID
+      input#inputName.form-control(type='text', name='id', value=doc[0]._id, readonly)
     .form-group
       label.sr-only(for='inputName') Name
       input#inputName.form-control(type='text', name='name', value=doc[0].name)

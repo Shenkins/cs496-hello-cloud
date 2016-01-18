@@ -52,50 +52,49 @@ router.get('/edit', function(req, res, next) {
 });
 
 router.get('/edit/:recordID', function(req, res, next) {
-  //console.log(users);
   var currentDate = new Date();
-  var tempDoc;
-  var dname, dmail, dpass, dgen, dadmin;
+  var statusMessage = 'Awaiting Submission';
   Record.find({_id:req.params.recordID}, function(err, doc){
-    tempDoc = doc;
-    console.log(tempDoc);
+    console.log(doc);
     res.render('edit', { 
+      statusMessage,
       doc, 
-      name: doc.name,
-      email: doc.email,
       title: 'Hello Cloud', 
       date: currentDate 
     });
   });
 });
 
-// router.post('/edit/:recordID', function(req, res, next) {
-//   var currentDate = new Date();
-//   console.log(req.body);
-//   var temp = req.body;
-//   new Record({ 
-//     _id : 
-//     name : temp.name,
-//     email : temp.email,
-//     password : temp.password,
-//     gender : temp.gender,
-//     admin : temp.admin
-//   }).save(function(err, doc){
-//     if(err){
-//       //res.json(err);
-//     }else{
-//       //res.send('Success')
-//     }
-//   });
-//   Record.findOne({_id:req.params.recordID}, function(err, Record){
-//     console.log('hello');
-//     res.render('edit', { 
-//       Record, 
-//       title: 'Hello Cloud', 
-//       date: currentDate 
-//     });
-//   });
-// });
+router.post('/edit', function(req, res, next) {
+  var currentDate = new Date();
+  var temp = req.body;
+  console.log(temp.id);
+  var statusMessage = 'Awaiting Submission';
+  new Record({ 
+    _id : temp.id,
+    name : temp.name,
+    email : temp.email,
+    password : temp.password,
+    gender : temp.gender,
+    admin : temp.admin
+  }).save(function(err, doc){
+    if(err){
+      //res.json(err);
+      statusMessage = 'Data Update Failed! Please try again.';
+    }else{
+      //res.send('Success')
+      statusMessage = 'Data Updated Successfully!';
+    }
+  });
+  Record.findOne({_id:temp.id}, function(err, doc){
+    res.render('edit', { 
+      doc,
+      statusMessage,
+      title: 'Hello Cloud', 
+      date: currentDate 
+    });
+  });
+});
 
 router.get('/db', function(req, res, next) {
   //console.log(users);

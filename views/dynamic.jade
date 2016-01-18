@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p This is the second assignment for CS496 - Mobile and Cloud Software Development
+  p It is currently #{date}
+  h4 using:
+    li nodejs + express
+    li jade templating
+    li heroku for app deployment
+    li mongdb + mongolab database
+
+  h2 input:
+  form(method='post', action='/dynamic')
+    .form-group
+      label.sr-only(for='inputName') Username
+      input#inputName.form-control(type='text', name='username', placeholder='Username')
+    .form-group
+      label.sr-only(for='inputEmail') Email
+      input#inputEmail.form-control(type='email', name='email', placeholder='Email')
+    .form-group
+      label.sr-only(for='inputPassword') Password
+      input#inputPassword.form-control(type='password', name='password', placeholder='Password')
+    button.btn.btn-primary.btn-block(type='submit') Sign Up
+
+    h2 database entries:

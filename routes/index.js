@@ -7,4 +7,15 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Hello Cloud', date: currentDate });
 });
 
+router.get('/dynamic', function(req, res, next) {
+  var currentDate = new Date();
+  res.render('dynamic', { title: 'Hello Cloud', date: currentDate });
+});
+
+router.get('/dynamic', function(req, res, next) {
+  var currentDate = new Date();
+  res.render('dynamic', { title: 'Hello Cloud', date: currentDate });
+});
+
+
 module.exports = router;

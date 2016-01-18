@@ -47,18 +47,25 @@ router.get('/edit', function(req, res, next) {
   console.log(req.body);
   //console.log(User);
   Record.find(function(err, Record){
-    res.render('dynamic', { Record, title: 'Hello Cloud', date: currentDate });
+     res.render('dynamic', { Record, title: 'Hello Cloud', date: currentDate });
   });
 });
 
 router.get('/edit/:recordID', function(req, res, next) {
   //console.log(users);
   var currentDate = new Date();
-  Record.find({_id:req.params.recordID}, function(err, Record){
+  var tempDoc;
+  var dname, dmail, dpass, dgen, dadmin;
+  Record.find({_id:req.params.recordID}, function(err, doc){
+    tempDoc = doc;
+    console.log(tempDoc);
     res.render('edit', { 
-      Record, 
+      doc, 
+      name: doc.name,
+      email: doc.email,
       title: 'Hello Cloud', 
-      date: currentDate });
+      date: currentDate 
+    });
   });
 });
 

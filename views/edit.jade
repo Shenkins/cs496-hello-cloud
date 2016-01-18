@@ -1,9 +1,6 @@
 extends layout
 
 block content
-  script(type='text/javascript')
-    var helloThere = !{JSON.stringify(Record.name)};
-  h1= helloThere
   h1= title
   p Welcome to #{title}
   p This is the second assignment for CS496 - Mobile and Cloud Software Development
@@ -25,7 +22,7 @@ block content
         th Gender
         th Admin
     tbody
-      each record, i in Record
+      each record, i in doc
         tr 
           td #{record._id}
           td #{record.name}
@@ -33,28 +30,49 @@ block content
           td #{record.password}
           td #{record.gender}
           td #{record.admin}
-  h2 Edit Record:
+  h2 Edit Record for: #{doc[0].name}
   form(method='post', action='/edit/')
     .form-group
       label.sr-only(for='inputName') Name
-      input#inputName.form-control(type='text', name='name', placeholder='New Name')
+      input#inputName.form-control(type='text', name='name', value=doc[0].name)
     .form-group
       label.sr-only(for='inputEmail') Email
-      input#inputEmail.form-control(type='email', name='email', placeholder='New Email')
+      input#inputEmail.form-control(type='email', name='email', value=doc[0].email)
     .form-group
       label.sr-only(for='inputPassword') Password
-      input#inputPassword.form-control(type='password', name='password', placeholder='New Password (USE FAKE PASSWORD)')
+      input#inputPassword.form-control(type='password', name='password', value=doc[0].password)
     .form-group
-      label.sr-only(for='inputGender') Gender
-      input(type='radio', name='gender', value='male', checked='')
-      |   Male  
-      input(type='radio', name='gender', value='female')
-      |   Female  
-      input(type='radio', name='gender', value='opted-out')
-      |   Opt-Out  
+      if doc[0].gender == 'male'
+        label.sr-only(for='inputGender') Gender
+        input(type='radio', name='gender', value='male', checked='')
+        |   Male  
+        input(type='radio', name='gender', value='female')
+        |   Female  
+        input(type='radio', name='gender', value='opted-out')
+        |   Opt-Out  
+      else if doc[0].gender == 'female'
+        label.sr-only(for='inputGender') Gender
+        input(type='radio', name='gender', value='male')
+        |   Male  
+        input(type='radio', name='gender', value='female', checked='')
+        |   Female  
+        input(type='radio', name='gender', value='opted-out')
+        |   Opt-Out  
+      else
+        label.sr-only(for='inputGender') Gender
+        input(type='radio', name='gender', value='male')
+        |   Male  
+        input(type='radio', name='gender', value='female', checked='')
+        |   Female  
+        input(type='radio', name='gender', value='opted-out', checked = '')
+        |   Opt-Out  
     .form-group
-      label.sr-only(for='inputAdmin') Admin
-      input(type='checkbox', name='admin', value='true')
-      |   Admin
-
+      if doc[0].admin == 'true'
+        label.sr-only(for='inputAdmin') Admin
+        input(type='checkbox', name='admin', value='true', checked='')
+        |   Admin
+      if doc[0].admin == undefined
+        label.sr-only(for='inputAdmin') Admin
+        input(type='checkbox', name='admin', value='true')
+        |   Admin
     button.btn.btn-primary.btn-block(type='submit') Save

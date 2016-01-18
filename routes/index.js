@@ -70,22 +70,46 @@ router.post('/edit', function(req, res, next) {
   var temp = req.body;
   console.log(temp.id);
   var statusMessage = 'Awaiting Submission';
-  new Record({ 
-    _id : temp.id,
-    name : temp.name,
-    email : temp.email,
-    password : temp.password,
-    gender : temp.gender,
-    admin : temp.admin
-  }).save(function(err, doc){
-    if(err){
-      //res.json(err);
-      statusMessage = 'Data Update Failed! Please try again.';
-    }else{
-      //res.send('Success')
-      statusMessage = 'Data Updated Successfully!';
+  Record.findOneAndUpdate(
+    {_id: temp.id},     //query
+    {$set: {
+      name : temp.name,
+      email : temp.email,
+      password : temp.password,
+      gender : temp.gender,
+      admin : temp.admin
+      }
+    },   //update
+    {                                               //options
+        upsert: true,              // create the doc when it's not there
+        //returnOriginal:false     // return the modified doc *(new is not supported here!)
+    }, 
+    function(err, r){       //callback
+        if(err) {
+          console.log(err);
+          statusMessage = 'Data Update Failed! Please try again!';
+        } else {
+          console.log('Successful update!')
+          statusMessage = 'Data Updated Successfully';
+        }
     }
-  });
+);
+  // Record.save({ 
+  //   _id : temp.id,
+  //   name : temp.name,
+  //   email : temp.email,
+  //   password : temp.password,
+  //   gender : temp.gender,
+  //   admin : temp.admin
+  // }).save(function(err, doc){
+  //   if(err){
+  //     //res.json(err);
+  //     statusMessage = 'Data Update Failed! Please try again.';
+  //   }else{
+  //     //res.send('Success')
+  //     statusMessage = 'Data Updated Successfully!';
+  //   }
+  // });
   var currentDate = new Date();
   Record.find({_id:temp.id}, function(err, doc){
     console.log(doc);

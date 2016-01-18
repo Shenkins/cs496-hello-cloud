@@ -10,15 +10,17 @@ router.get('/', function(req, res, next) {
 
 router.get('/dynamic', function(req, res, next) {
   var currentDate = new Date();
+  var statusMessage = 'Awaiting Submission';
   console.log(req.body);
   //console.log(User);
   Record.find(function(err, Record){
-    res.render('dynamic', { Record, title: 'Hello Cloud', date: currentDate });
+    res.render('dynamic', { statusMessage, Record, title: 'Hello Cloud', date: currentDate });
   });
 });
 
 router.post('/dynamic', function(req, res, next) {
   //console.log(req.body);
+  var statusMessage = 'Awaiting Submission';
   var temp = req.body;
   new Record({ 
     name : temp.name,
@@ -29,13 +31,14 @@ router.post('/dynamic', function(req, res, next) {
   }).save(function(err, doc){
     if(err){
       //res.json(err);
+      statusMessage = 'Data Insertion Failed! Please try again.';
     }else{
-      //res.send('Success')
+      statusMessage = 'Data Added Successfully!';
     }
   });
   var currentDate = new Date();
   Record.find(function(err, Record){
-    res.render('dynamic', { Record, title: 'Hello Cloud', date: currentDate });
+    res.render('dynamic', { statusMessage, Record, title: 'Hello Cloud', date: currentDate });
   });
 });
 

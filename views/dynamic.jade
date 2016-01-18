@@ -10,7 +10,7 @@ block content
     li jade templating
     li heroku + mongolab app deployment
     li mongodb + mongoose database
-
+  
   h2 Records:
   table.table-striped.table.condensed
     thead
@@ -33,6 +33,9 @@ block content
           td #{record.gender}
           td #{record.admin}
 
+  div.alert.alert-info
+      strong Status:
+      |  #{statusMessage}
   h2 Add Record:
   form(method='post', action='/dynamic')
     .form-group

@@ -11,32 +11,32 @@ block content
     li heroku + mongolab app deployment
     li mongodb + mongoose database
 
-  h2 Record to Edit:
-  table.table-striped.table.condensed
-    thead
-      tr
-        th ID
-        th Name
-        th Email
-        th Password
-        th Gender
-        th Admin
-    tbody
-      each record, i in doc
-        tr 
-          td #{record._id}
-          td #{record.name}
-          td #{record.email}
-          td #{record.password}
-          td #{record.gender}
-          td #{record.admin}
+  //- h2 Record to Edit:
+  //- table.table-striped.table.condensed
+  //-   thead
+  //-     tr
+  //-       th ID
+  //-       th Name
+  //-       th Email
+  //-       th Password
+  //-       th Gender
+  //-       th Admin
+  //-   tbody
+  //-     each record, i in doc
+  //-       tr 
+  //-         td #{record._id}
+  //-         td #{record.name}
+  //-         td #{record.email}
+  //-         td #{record.password}
+  //-         td #{record.gender}
+  //-         td #{record.admin}
   div.alert.alert-info
       strong Status:
       |  #{statusMessage}
   h2 Edit Record for: #{doc[0].name}
   form(method='post', action='/edit/')
     .form-group
-      label.sr-only(for='inputName') DO NOT CHANGE ID
+      label.sr-only(for='inputName') ID
       input#inputName.form-control(type='text', name='id', value=doc[0]._id, readonly)
     .form-group
       label.sr-only(for='inputName') Name

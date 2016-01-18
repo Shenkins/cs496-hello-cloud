@@ -86,10 +86,12 @@ router.post('/edit', function(req, res, next) {
       statusMessage = 'Data Updated Successfully!';
     }
   });
-  Record.findOne({_id:temp.id}, function(err, doc){
+  var currentDate = new Date();
+  Record.find({_id:temp.id}, function(err, doc){
+    console.log(doc);
     res.render('edit', { 
-      doc,
       statusMessage,
+      doc, 
       title: 'Hello Cloud', 
       date: currentDate 
     });

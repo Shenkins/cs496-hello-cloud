@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  script(type='text/javascript')
+    var helloThere = !{JSON.stringify(Record.name)};
+  h1= helloThere
   h1= title
   p Welcome to #{title}
   p This is the second assignment for CS496 - Mobile and Cloud Software Development
@@ -11,11 +14,11 @@ block content
     li heroku + mongolab app deployment
     li mongodb + mongoose database
 
-  h2 Records:
+  h2 Record to Edit:
   table.table-striped.table.condensed
     thead
       tr
-        th 
+        th ID
         th Name
         th Email
         th Password
@@ -24,26 +27,23 @@ block content
     tbody
       each record, i in Record
         tr 
-          td
-            a(href=/edit/ + record._id) Edit
-          //td a(href="#{record._id}")
+          td #{record._id}
           td #{record.name}
           td #{record.email}
           td #{record.password}
           td #{record.gender}
           td #{record.admin}
-
-  h2 Add Record:
-  form(method='post', action='/dynamic')
+  h2 Edit Record:
+  form(method='post', action='/edit/')
     .form-group
       label.sr-only(for='inputName') Name
-      input#inputName.form-control(type='text', name='name', placeholder='Name')
+      input#inputName.form-control(type='text', name='name', placeholder='New Name')
     .form-group
       label.sr-only(for='inputEmail') Email
-      input#inputEmail.form-control(type='email', name='email', placeholder='Email')
+      input#inputEmail.form-control(type='email', name='email', placeholder='New Email')
     .form-group
       label.sr-only(for='inputPassword') Password
-      input#inputPassword.form-control(type='password', name='password', placeholder='Password (USE FAKE PASSWORD)')
+      input#inputPassword.form-control(type='password', name='password', placeholder='New Password (USE FAKE PASSWORD)')
     .form-group
       label.sr-only(for='inputGender') Gender
       input(type='radio', name='gender', value='male', checked='')

@@ -2,11 +2,11 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var UserSchema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  role: { type: String, required: true },
-  admin: Boolean,
-  location: String
+  name: { type: String },
+  email: { type: String },
+  password: { type: String },
+  gender: { type: String },
+  admin: { type: String }
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('records', UserSchema);

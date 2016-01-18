@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 // connect to DB
 var configDB = require('./config/db.js');
 mongoose.connect(configDB.url);
+require('./models/User');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

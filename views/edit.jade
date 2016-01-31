@@ -14,7 +14,7 @@ block content
   h4
     a(href=/dynamic/) Go Back
 
-  h2 Record to Edit:
+  h2 User to Edit:
   table.table-striped.table.condensed
     thead
       tr
@@ -25,7 +25,7 @@ block content
         th Gender
         th Admin
     tbody
-      each record, i in doc
+      each user, i in doc
         tr 
           td #{doc[0]._id}
           td #{doc[0].name}
@@ -36,7 +36,7 @@ block content
   div.alert.alert-info
       strong Status:
       |  #{statusMessage}
-  h2 Edit Record for: #{doc[0].name}
+  h2 Edit User: #{doc[0].name}
   form(method='post', action='/edit/')
     .form-group
       label.sr-only(for='inputName') ID

@@ -1,28 +1,39 @@
 var express = require('express');
 var router = express.Router();
-var Record = require('../models/User');
+var User = require('../models/User');
 
-/* GET home page. */
+//======================================================================================================
+// ASSIGNMENT 1 - Hello Cloud
+
+// GET
 router.get('/', function(req, res, next) {
   var currentDate = new Date();
   res.render('index', { title: 'Hello Cloud', date: currentDate });
 });
 
+
+
+
+//======================================================================================================
+// ASSIGNMENT 2 - Dynamic
+
+// GET
 router.get('/dynamic', function(req, res, next) {
   var currentDate = new Date();
   var statusMessage = 'Awaiting Submission';
   console.log(req.body);
   //console.log(User);
-  Record.find(function(err, Record){
-    res.render('dynamic', { statusMessage, Record, title: 'Hello Cloud', date: currentDate });
+  User.find(function(err, User){
+    res.render('dynamic', { statusMessage, User, title: 'Hello Cloud', date: currentDate });
   });
 });
 
+// POST
 router.post('/dynamic', function(req, res, next) {
   //console.log(req.body);
   var statusMessage = 'Awaiting Submission';
   var temp = req.body;
-  new Record({ 
+  new User({ 
     name : temp.name,
     email : temp.email,
     password : temp.password,
@@ -37,24 +48,27 @@ router.post('/dynamic', function(req, res, next) {
     }
   });
   var currentDate = new Date();
-  Record.find(function(err, Record){
-    res.render('dynamic', { statusMessage, Record, title: 'Hello Cloud', date: currentDate });
+  User.find(function(err, User){
+    res.render('dynamic', { statusMessage, User, title: 'Hello Cloud', date: currentDate });
   });
 });
 
+// GET EDIT
 router.get('/edit', function(req, res, next) {
   var currentDate = new Date();
   console.log(req.body);
   //console.log(User);
-  Record.find(function(err, Record){
-     res.render('dynamic', { Record, title: 'Hello Cloud', date: currentDate });
+  User.find(function(err, User){
+     res.render('dynamic', { User, title: 'Hello Cloud', date: currentDate });
   });
 });
 
-router.get('/edit/:recordID', function(req, res, next) {
+
+// GET EDIT userID
+router.get('/edit/:userID', function(req, res, next) {
   var currentDate = new Date();
   var statusMessage = 'Awaiting Submission';
-  Record.find({_id:req.params.recordID}, function(err, doc){
+  User.find({_id:req.params.userID}, function(err, doc){
     console.log(doc);
     res.render('edit', { 
       statusMessage,
@@ -65,12 +79,14 @@ router.get('/edit/:recordID', function(req, res, next) {
   });
 });
 
+
+// POST EDIT
 router.post('/edit', function(req, res, next) {
   var currentDate = new Date();
   var temp = req.body;
   console.log(temp.id);
   var statusMessage = 'Awaiting Submission';
-  Record.findOneAndUpdate(
+  User.findOneAndUpdate(
     {_id: temp.id},     //query
     {$set: {
       name : temp.name,
@@ -81,19 +97,19 @@ router.post('/edit', function(req, res, next) {
       }
     },   //update
     {                                               //options
-        upsert: true,              // create the doc when it's not there
-        //returnOriginal:false     // return the modified doc *(new is not supported here!)
+      upsert: true,              // create the doc when it's not there
+      //returnOriginal:false     // return the modified doc *(new is not supported here!)
     }, 
     function(err, r){       //callback
-        if(err) {
-          console.log(err);
-          statusMessage = 'Data Update Failed! Please try again!';
-        } else {
-          console.log('Successful update!')
-          statusMessage = 'Data Updated Successfully';
-        }
+      if(err) {
+        console.log(err);
+        statusMessage = 'Data Update Failed! Please try again!';
+      } else {
+        console.log('Successful update!')
+        statusMessage = 'Data Updated Successfully';
+      }
     }
-);
+  );
   // Record.save({ 
   //   _id : temp.id,
   //   name : temp.name,
@@ -111,7 +127,7 @@ router.post('/edit', function(req, res, next) {
   //   }
   // });
   var currentDate = new Date();
-  Record.find({_id:temp.id}, function(err, doc){
+  User.find({_id:temp.id}, function(err, doc){
     console.log(doc);
     res.render('edit', { 
       statusMessage,
@@ -122,13 +138,46 @@ router.post('/edit', function(req, res, next) {
   });
 });
 
+
+// VIEW DB JSON
 router.get('/db', function(req, res, next) {
   //console.log(users);
-  Record.find(function(err, Record){
-    console.log(Record);
-    res.json(Record);
+  User.find(function(err, User){
+    console.log(User);
+    res.json(User);
   });
 });
+
+
+//======================================================================================================
+// ASSIGNMENT 3 - API
+
+// GET ALL
+router.get('/api', function (req, res, next) {
+
+});
+
+// GET BY ID
+router.get('/api/:recordID', function (req, res, next) {
+
+});
+
+// POST
+router.post('/api/:recordID', function (req, res, next) {
+
+});
+
+// PUT
+router.put('/api/:recordID', function (req, res, next) {
+
+});
+
+
+// DELETE 
+router.delete('/api/:recordID', function (req, res, next) {
+
+});
+
 
 
 module.exports = router;

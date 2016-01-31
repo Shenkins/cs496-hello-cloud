@@ -11,7 +11,7 @@ block content
     li heroku + mongolab app deployment
     li mongodb + mongoose database
   
-  h2 Records:
+  h2 User:
   table.table-striped.table.condensed
     thead
       tr
@@ -22,21 +22,21 @@ block content
         th Gender
         th Admin
     tbody
-      each record, i in Record
+      each user, i in User
         tr 
           td
-            a(href=/edit/ + record._id) Edit
-          //td a(href="#{record._id}")
-          td #{record.name}
-          td #{record.email}
-          td #{record.password}
-          td #{record.gender}
-          td #{record.admin}
+            a(href=/edit/ + user._id) Edit
+          //td a(href="#{user._id}")
+          td #{user.name}
+          td #{user.email}
+          td #{user.password}
+          td #{user.gender}
+          td #{user.admin}
 
   div.alert.alert-info
       strong Status:
       |  #{statusMessage}
-  h2 Add Record:
+  h2 Add User:
   form(method='post', action='/dynamic')
     .form-group
       label.sr-only(for='inputName') Name

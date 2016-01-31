@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
-var UserSchema = new Schema({
+var ContentSchema = new Schema({
   name: { type: String, required: true},
   email: { type: String, required: true, required: true, unique: true},
   password: { type: String,required: true },
@@ -9,4 +9,4 @@ var UserSchema = new Schema({
   admin: { type: String }
 });
 
-module.exports = mongoose.model('users', UserSchema);
+module.exports = mongoose.model('Content', ContentSchema);

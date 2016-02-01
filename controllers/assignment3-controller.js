@@ -1,23 +1,4 @@
-var mongo = require('mongodb');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('contents', server);
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'content' database");
-        db.collection('contents', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'contents' collection doesn not exist. Creating it with sample data...");
-                populateDB();
-            }
-        });
-    }
-});
+'use strict';
 
 exports.findById = function(req, res) {
     var id = req.params.id;
@@ -72,8 +53,8 @@ exports.updateContent = function(req, res) {
 
 exports.deleteContent = function(req, res) {
     var id = req.params.id;
-    console.log('Deleting wine: ' + id);
-    db.collection('wines', function(err, collection) {
+    console.log('Deleting title: ' + id);
+    db.collection('content', function(err, collection) {
         collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred - ' + err});

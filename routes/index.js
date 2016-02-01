@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
+var Title = require('../models/Title');
 
 //======================================================================================================
 // ASSIGNMENT 1 - Hello Cloud
@@ -110,22 +111,7 @@ router.post('/edit', function(req, res, next) {
       }
     }
   );
-  // Record.save({ 
-  //   _id : temp.id,
-  //   name : temp.name,
-  //   email : temp.email,
-  //   password : temp.password,
-  //   gender : temp.gender,
-  //   admin : temp.admin
-  // }).save(function(err, doc){
-  //   if(err){
-  //     //res.json(err);
-  //     statusMessage = 'Data Update Failed! Please try again.';
-  //   }else{
-  //     //res.send('Success')
-  //     statusMessage = 'Data Updated Successfully!';
-  //   }
-  // });
+
   var currentDate = new Date();
   User.find({_id:temp.id}, function(err, doc){
     console.log(doc);
@@ -152,24 +138,42 @@ router.get('/db', function(req, res, next) {
 //======================================================================================================
 // ASSIGNMENT 3 - API
 
-// GET ALL
+// GET - display all documents in DB
 router.get('/api', function (req, res, next) {
-
+  Title.find(function(err, Title){
+    res.json(Title);
+  });
 });
 
-// GET BY ID
+// GET BY ID - find and display single title
 router.get('/api/:recordID', function (req, res, next) {
-
+  Title.find({_id:req.params.recordID}, function(err, Title){
+    res.send(Title);
+  })
 });
 
-// POST
-router.post('/api/:recordID', function (req, res, next) {
-
+// POST - Add new document into DB
+router.post('/api', function (req, res, next) {
+  
 });
 
-// PUT
+// PUT - Update existing document in DB
 router.put('/api/:recordID', function (req, res, next) {
+  var id = req.params.id;
+  var title = req.body;
 
+  console.log('Updating title: ' + id);
+  console.log(JSON.stringify(title));
+
+  Title.update({'_id':new BSON.ObjectID(id)}, title, {safe:true}, function(err, result) {
+    if (err) {
+      console.log('Error updating title: ' + err);
+      res.send({'Error':'An error has occurred while attempting to update title.'});
+    } else {
+      console.log('' + result + ' document(s) updated');
+      res.json(title);
+    }
+  });
 });
 
 

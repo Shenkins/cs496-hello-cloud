@@ -187,7 +187,7 @@ router.put('/api/:recordID', function (req, res, next) {
 });
 
 
-// DELETE 
+// DELETE - Remove document from DB
 router.delete('/api/:recordID', function (req, res, next) {
   var id = req.params.id;
   console.log('Deleting title: ' + id);

@@ -156,6 +156,7 @@ router.get('/api/:recordID', function (req, res, next) {
 router.post('/api', function (req, res, next) {
   var title = req.body;
   console.log('Adding title: ' + JSON.stringify(title));
+
   Title.insert(title, {safe:true}, function(err, result) {
     if (err) {
       res.json({'Error':'An error has occurred while inserting title'});
@@ -188,7 +189,16 @@ router.put('/api/:recordID', function (req, res, next) {
 
 // DELETE 
 router.delete('/api/:recordID', function (req, res, next) {
-
+  var id = req.params.id;
+  console.log('Deleting title: ' + id);
+  Title.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+    if (err) {
+      res.json({'error':'An error has occurred - ' + err});
+    } else {
+      console.log('' + result + ' document(s) deleted');
+      res.json(req.body);
+    }
+  });
 });
 
 

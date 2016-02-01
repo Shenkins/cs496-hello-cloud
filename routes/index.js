@@ -177,7 +177,7 @@ router.put('/api/:recordID', function (req, res, next) {
   Title.update({'_id':new BSON.ObjectID(id)}, title, {safe:true}, function(err, result) {
     if (err) {
       console.log('Error updating title: ' + err);
-      res.send({'Error':'An error has occurred while attempting to update title.'});
+      res.json({'Error':'An error has occurred while attempting to update title.'});
     } else {
       console.log('' + result + ' document(s) updated');
       res.json(title);

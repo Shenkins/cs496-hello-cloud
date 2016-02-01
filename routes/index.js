@@ -149,15 +149,6 @@ router.get('/db', function(req, res, next) {
 //======================================================================================================
 // ASSIGNMENT 3 - API
 
-// APITEST - testing page
-router.get('/apitest', function (req, res, next) {
-  var currentDate = new Date();
-  res.render('apitest', { 
-    title: 'Hello Cloud', 
-    date: currentDate 
-  });
-});
-
 // GET - display all documents in DB
 router.get('/api', function (req, res, next) {
   Title.find(function(err, Title){
@@ -187,13 +178,13 @@ router.post('/api', function (req, res, next) {
 
 // PUT - Update existing document in DB
 router.put('/api/:recordID', function (req, res, next) {
-  var recordid = req.params.id;
+  var recordid = req.params.recordID;
   var title = req.body;
 
-  console.log('Updating title: ' + id);
+  console.log('Updating title: ' + recordid);
   console.log(JSON.stringify(title));
 
-  User.findOneAndUpdate(
+  Title.findOneAndUpdate(
     {_id: recordid},     //query
     {$set: {
       name : title.name,
@@ -224,14 +215,15 @@ router.put('/api/:recordID', function (req, res, next) {
 
 // DELETE - Remove document from DB
 router.delete('/api/:recordID', function (req, res, next) {
-  var id = req.params.id;
-  console.log('Deleting title: ' + id);
-  Title.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+  var recordid = req.params.recordID;
+  console.log(req.params);
+  console.log('Deleting title: ' + recordid);
+  Title.remove({'_id':recordid}, function(err, result) {
     if (err) {
       res.json({'Error':'An error has occurred while trying to delete title.'});
     } else {
       console.log('' + result + ' document(s) deleted');
-      res.json(req.body);
+      res.json({'Success':'Document Successfully Deleted'});
     }
   });
 });

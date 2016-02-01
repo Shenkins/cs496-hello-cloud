@@ -1,0 +1,14 @@
+GET (view all titles):
+curl -i -X GET http://localhost:3000/api/
+
+POST (add new title):
+curl -H "Content-Type: application/json" -X POST http://localhost:3000/api -d "{\"title\":\"Questionable Content\", \"mainURL\":\"http://www.questionablecontent.net\",\"type\":\"Web Comic\",\"language\":\"English\",\"rating\":4.76}"
+
+GET w/param (find title by id):
+curl -i -X GET http://localhost:3000/api/[insert document id here!]
+
+PUT (update title by id):
+curl -H "Content-Type: application/json" -X PUT http://localhost:3000/api/[insert document id here!] -d "{\"title\":\"Questionable Content\", \"mainURL\":\"http://www.questionablecontent.net\",\"type\":\"Web Comic\",\"language\":\"English\",\"rating\":4.9}"
+
+DELETE (delete title by id):
+curl -i -X DELETE http://localhost:3000/api/[insert document id here!]

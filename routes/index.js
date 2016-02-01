@@ -212,7 +212,7 @@ router.put('/api/:recordID', function (req, res, next) {
     function(err, r){       //callback
       if(err) {
         console.log(err);
-        res.json('Error':'Data Update Failed!');
+        res.json({'Error':'Data Update Failed!'});
       } else {
         console.log('Successful update!')
         res.json(req.body);

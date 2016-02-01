@@ -149,6 +149,15 @@ router.get('/db', function(req, res, next) {
 //======================================================================================================
 // ASSIGNMENT 3 - API
 
+// APITEST - testing page
+router.get('/apitest', function (req, res, next) {
+  var currentDate = new Date();
+  res.render('apitest', { 
+    title: 'Hello Cloud', 
+    date: currentDate 
+  });
+});
+
 // GET - display all documents in DB
 router.get('/api', function (req, res, next) {
   Title.find(function(err, Title){
@@ -166,14 +175,12 @@ router.get('/api/:recordID', function (req, res, next) {
 // POST - Add new document into DB
 router.post('/api', function (req, res, next) {
   var title = req.body;
-  console.log('Adding title: ' + JSON.stringify(title));
-
-  Title.insert(title, {safe:true}, function(err, result) {
-    if (err) {
-      res.json({'Error':'An error has occurred while inserting title.'});
-    } else {
-      console.log('Success: ' + JSON.stringify(result[0]));
-      res.json(result[0]);
+  new Title(title).save(function(err , doc){
+    if(err){
+      //res.json(err);
+      res.json({'Error':  'Error has occurred while creating new Title.'});
+    }else{
+      res.json(title);
     }
   });
 });
@@ -186,15 +193,30 @@ router.put('/api/:recordID', function (req, res, next) {
   console.log('Updating title: ' + id);
   console.log(JSON.stringify(title));
 
-  Title.update({'_id':new BSON.ObjectID(id)}, title, {safe:true}, function(err, result) {
-    if (err) {
-      console.log('Error updating title: ' + err);
-      res.json({'Error':'An error has occurred while attempting to update title.'});
-    } else {
-      console.log('' + result + ' document(s) updated');
-      res.json(title);
+  Title.findOneAndUpdate(
+    {_id: id},     //query
+    {$set: {
+      name : temp.name,
+      email : temp.email,
+      password : temp.password,
+      gender : temp.gender,
+      admin : temp.admin
+      }
+    },   //update
+    {                                               //options
+      upsert: true,              // create the doc when it's not there
+      //returnOriginal:false     // return the modified doc *(new is not supported here!)
+    }, 
+    function(err, r){       //callback
+      if(err) {
+        console.log(err);
+        statusMessage = 'Data Update Failed! Please try again!';
+      } else {
+        console.log('Successful update!')
+        statusMessage = 'Data Updated Successfully';
+      }
     }
-  });
+  );
 });
 
 

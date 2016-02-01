@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p This is the second assignment for CS496 - Mobile and Cloud Software Development
+  p It is currently #{date}
+  h4 using:
+    li nodejs + express
+    li jade templating
+    li heroku + mongolab app deployment
+    li mongodb + mongoose database
+  
+  
+  h2 Get (with id params):
+  form(method='get', action='/api')
+    .form-group
+      label.sr-only(for='inputID') ID
+      input#inputID.form-control(type='text', name='ID')
+    button.btn.btn-primary.btn-block(type='submit') Save

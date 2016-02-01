@@ -187,20 +187,22 @@ router.post('/api', function (req, res, next) {
 
 // PUT - Update existing document in DB
 router.put('/api/:recordID', function (req, res, next) {
-  var id = req.params.id;
+  var recordid = req.params.id;
   var title = req.body;
 
   console.log('Updating title: ' + id);
   console.log(JSON.stringify(title));
 
-  Title.findOneAndUpdate(
-    {_id: id},     //query
+  User.findOneAndUpdate(
+    {_id: recordid},     //query
     {$set: {
-      name : temp.name,
-      email : temp.email,
-      password : temp.password,
-      gender : temp.gender,
-      admin : temp.admin
+      name : title.name,
+      mainURL : title.mainURL,
+      type : title.type,
+      language : title.language,
+      author : title.author,
+      chapters : title.chapters,
+      rating : title.rating
       }
     },   //update
     {                                               //options
@@ -210,10 +212,10 @@ router.put('/api/:recordID', function (req, res, next) {
     function(err, r){       //callback
       if(err) {
         console.log(err);
-        statusMessage = 'Data Update Failed! Please try again!';
+        res.json('Error':'Data Update Failed!');
       } else {
         console.log('Successful update!')
-        statusMessage = 'Data Updated Successfully';
+        res.json(req.body);
       }
     }
   );
